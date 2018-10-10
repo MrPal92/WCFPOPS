@@ -101,3 +101,23 @@ as
 				values (@PurchaseOrderNO, @ItemCode, @Quantity)
  End
 
+Create Procedure spGetAllItems
+as
+ Begin
+	Select * From ITEM
+ End
+
+Create Procedure spGetAllSuppliers
+as
+ Begin
+	Select * From SUPPLIER
+ End
+
+Create Procedure spGetAllOrders
+as
+ Begin
+	 Select T1.PurchaseOrderNo, T3.ItemDescription , T2.Quantity, T1.PurchaseDate, T4.SupplierName from POMASTER as T1
+		right join PODETAIL as T2 ON T1.PurchaseOrderNO = T2.PurchaseOrderNO 
+		right join ITEM as T3 ON T2.ItemCode = T3.ItemCode
+		right join SUPPLIER as T4 ON T1.SupplierNumber = T4.SupplierNumber
+ End

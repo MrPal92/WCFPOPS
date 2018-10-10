@@ -12,6 +12,6 @@ namespace WCFPOPS
         public string ItemDescription { get; set; }
 
         [DataMember]
-        public string ItemRate { get; set; }
+        public decimal ItemRate { get; set; }
     }
 }

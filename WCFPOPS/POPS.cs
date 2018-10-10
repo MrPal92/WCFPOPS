@@ -13,6 +13,8 @@ namespace WCFPOPS
     {
         string connectionString = "Data Source = Pal-PC; Initial Catalog = PurchaseOrderDb;Integrated Security = true";
 
+        // Methods for Create Operation
+        
         public void AddItem(Item item)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
@@ -78,6 +80,97 @@ namespace WCFPOPS
                 }
                 scope.Complete();
             }
+        }
+
+        //Methods For Read Operation
+
+        public List<Item> GetAllItems()
+        {
+            List<Item> itemsList = new List<Item>();
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand("spGetAllItems", con);
+                command.CommandType = CommandType.StoredProcedure;
+
+                con.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Item item = new Item();
+
+                    item.ItemCode = (string)reader["ItemCode"];
+                    item.ItemDescription = (string)reader["ItemDescription"];
+                    item.ItemRate = (decimal)reader["ItemRate"];
+
+                    itemsList.Add(item);
+                }
+                con.Close();
+            }
+
+            return itemsList;
+        }
+
+        public List<Order> GetAllOrders()
+        {
+            List<Order> ordersList = new List<Order>();
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand("spGetAllOrders", con);
+                command.CommandType = CommandType.StoredProcedure;
+
+                con.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Order order = new Order();
+
+                    order.PurchaseOrderNO = (string)reader["PurchaseOrderNO"];
+                    order.ItemDescription = (string)reader["ItemDescription"];
+                    order.Quantity = (string)reader["Quantity"];
+                    order.Date = (DateTime)reader["Date"];
+                    order.SupplierName = (string)reader["SupplierName"];
+
+                    ordersList.Add(order);
+                }
+                con.Close();
+            }
+
+            return ordersList;
+        }
+
+        public List<Supplier> GetAllSuppliers()
+        {
+            List<Supplier> suppliersList = new List<Supplier>();
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand("spGetAllSuppliers", con);
+                command.CommandType = CommandType.StoredProcedure;
+
+                con.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Supplier supplier = new Supplier();
+
+                    supplier.SupplierNumber = (string)reader["SupplierNumber"];
+                    supplier.SupplierName = (string)reader["SupplierName"];
+                    supplier.SupplierAddress = (string)reader["SupplierAddress"];
+
+                    suppliersList.Add(supplier);
+                }
+                con.Close();
+            }
+
+            return suppliersList;
         }
     }
 }

@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="IPOPS.cs" />
     <Compile Include="Item.cs" />
+    <Compile Include="Order.cs" />
     <Compile Include="PODetail.cs" />
     <Compile Include="POMaster.cs" />
     <Compile Include="POPS.cs" />
