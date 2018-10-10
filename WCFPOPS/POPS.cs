@@ -13,7 +13,7 @@ namespace WCFPOPS
     {
         string connectionString = "Data Source = Pal-PC; Initial Catalog = PurchaseOrderDb;Integrated Security = true";
 
-        // Methods for Create Operation
+        // Methods to perform Create Operations
         
         public void AddItem(Item item)
         {
@@ -82,7 +82,7 @@ namespace WCFPOPS
             }
         }
 
-        //Methods For Read Operation
+        //Methods to perform Read Operations
 
         public List<Item> GetAllItems()
         {
@@ -171,6 +171,96 @@ namespace WCFPOPS
             }
 
             return suppliersList;
+        }
+
+        //Methods to perform Update Operations
+
+        public void UpdateSupplier(Supplier supplier)
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand("spUpdateSupplier", con);
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.AddWithValue("@SupplierNumber", supplier.SupplierNumber);
+                command.Parameters.AddWithValue("@SupplierName", supplier.SupplierName);
+                command.Parameters.AddWithValue("@SupplierAddress", supplier.SupplierAddress);
+
+                con.Open();
+                command.ExecuteNonQuery();
+                con.Close();
+            }
+        }
+
+        public void UpdateItem(Item item)
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand("spUpdateItem", con);
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.AddWithValue("@ItemCode", item.ItemCode);
+                command.Parameters.AddWithValue("@ItemDescription", item.ItemDescription);
+                command.Parameters.AddWithValue("@ItemRate", item.ItemRate);
+
+                con.Open();
+                command.ExecuteNonQuery();
+                con.Close();
+            }
+        }
+
+        //Methods to perform Delete Operations
+
+        public void DeleteSupplier(string supplierNumber)
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand("spDeleteSupplier", con);
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.AddWithValue("@SupplierNumber", supplierNumber);
+
+                con.Open();
+                command.ExecuteNonQuery();
+                con.Close();
+            }
+        }
+
+        public void DeleteItem(string itemCode)
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand("spDeleteItem", con);
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.AddWithValue("@ItemCode", itemCode);
+
+                con.Open();
+                command.ExecuteNonQuery();
+                con.Close();
+            }
+        }
+
+        public void DeleteOrder(string purchaseOrderNO)
+        {
+            using (TransactionScope scope = new TransactionScope())
+            {
+
+                using (SqlConnection con = new SqlConnection(connectionString))
+                {
+                    SqlCommand command = new SqlCommand("spDeleteOrder", con);
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@PurchaseOrderNO", purchaseOrderNO);
+
+                    con.Open();
+                    command.ExecuteNonQuery();
+                    con.Close();
+                }
+                scope.Complete();
+
+            }
+
         }
     }
 }

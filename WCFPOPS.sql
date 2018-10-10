@@ -121,3 +121,59 @@ as
 		right join ITEM as T3 ON T2.ItemCode = T3.ItemCode
 		right join SUPPLIER as T4 ON T1.SupplierNumber = T4.SupplierNumber
  End
+
+Create Procedure spUpdateSupplier
+(
+	@SupplierNumber CHAR(4),
+	@SupplierName VARCHAR(15),
+	@SupplierAddress VARCHAR(40)
+)
+as
+ Begin
+	Update SUPPLIER set SupplierName = @SupplierName, SupplierAddress = @SupplierAddress
+	where SupplierNumber = @SupplierNumber
+ End
+
+Create Procedure spUpdateItem
+(
+	@ItemCode CHAR(4),
+	@ItemDescription VARCHAR(15),
+	@ItemRate MONEY
+)
+as
+ Begin
+	Update ITEM set ItemDescription = @ItemDescription, ItemRate = @ItemRate
+	 where ItemCode = @ItemCode
+ End
+
+Create Procedure spDeleteSupplier
+(
+	@SupplierNumber CHAR(4)
+)
+as
+ Begin
+	Delete From SUPPLIER
+	 where SupplierNumber = @SupplierNumber
+ End
+
+Create Procedure spDeleteItem
+(
+	@ItemCode CHAR(4)
+)
+as
+ Begin
+	Delete From ITEM
+	 where ItemCode = @ItemCode
+ End
+
+Create Procedure spDeleteOrder
+(
+	@PurchaseOrderNO char(4)
+)
+as
+ Begin
+	Delete From PODETAIL
+	 where PurchaseOrderNO = @PurchaseOrderNO;
+	Delete From POMASTER
+	 where PurchaseOrderNO = @PurchaseOrderNO;
+ End

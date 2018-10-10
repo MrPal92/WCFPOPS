@@ -33,6 +33,21 @@ namespace WCFPOPS
 
         // Update Operations
 
+        [OperationContract]
+        void UpdateSupplier(Supplier supplier);
+
+        [OperationContract]
+        void UpdateItem(Item item);
+
         // Delete Operations
+
+        [OperationContract]
+        void DeleteSupplier(string supplierNumber);
+
+        [OperationContract]
+        void DeleteItem(string itemCode);
+
+        [OperationContract]
+        void DeleteOrder(string purchaseOrderNO);
     }
 }
