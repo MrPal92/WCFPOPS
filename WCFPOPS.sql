@@ -52,7 +52,7 @@ INSERT INTO PODETAIL VALUES('P104', 'I004', 3)
 INSERT INTO PODETAIL VALUES('P104', 'I005', 6)
 INSERT INTO PODETAIL VALUES('P105', 'I002', 8)
 
-Create Procedure AddSupplier
+Create Procedure spAddSupplier
 (
 	@SupplierNumber char(4),
 	@SupplierName varchar(15),
@@ -65,7 +65,7 @@ as
  End
 
 
-Create Procedure AddItem
+Create Procedure spAddItem
 (
 	@ItemCode char(4),
 	@ItemDescription varchar(15),
@@ -77,7 +77,7 @@ Create Procedure AddItem
 				values( @ItemCode, @ItemDescription, @ItemRate)
 	End
 
-Create Procedure AddPOMaster
+Create Procedure spAddPOMaster
 (
 	@PurchaseOrderNO char(4),
 	@PurchaseDate DateTime,
@@ -89,7 +89,7 @@ as
 				values( @PurchaseOrderNO, @PurchaseDate, @SupplierNumber)
  End
 
-Create Procedure AddPODetail
+Create Procedure spAddPODetail
 (
 	@PurchaseOrderNO char(4),
 	@ItemCode char(4),
@@ -100,3 +100,4 @@ as
 	Insert into PODETAIL ( PurchaseOrderNO, ItemCode, Quantity)
 				values (@PurchaseOrderNO, @ItemCode, @Quantity)
  End
+
